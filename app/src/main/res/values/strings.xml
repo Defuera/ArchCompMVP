@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">AbnAmro</string>
+    <string name="hint_search_bar">I\'m looking for</string>
+
+    <!--Loader widget-->
+    <string name="loading">Loading</string>
+    <string name="network_error">Network error, press to retry</string>
+    <string name="unexpected_error">Unexpected error occurred, try again later</string>
 </resources>
