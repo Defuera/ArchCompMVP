@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
@@ -17,8 +18,11 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import ru.justd.abnamro.R
 import ru.justd.abnamro.app.App
+import ru.justd.abnamro.app.di.AppComponent
 import ru.justd.abnamro.app.model.Venue
+import ru.justd.abnamro.list.view.VenueListViewState
 import ru.justd.abnamro.list.view.VenueListWidget
+import ru.justd.abnamro.utils.hideKeyboard
 import ru.justd.duperadapter.ArrayListDuperAdapter
 import ru.justd.lilwidgets.LilLoaderWidget
 
@@ -51,6 +55,11 @@ class VenueListActivity : AppCompatActivity() {
         val graph = (application as App).graph
 
         //init architecture components view model
+        initViewModel(graph)
+        initUi()
+    }
+
+    private fun initViewModel(graph: AppComponent) {
         viewModel = ViewModelProviders.of(
                 this,
                 object : ViewModelProvider.Factory {
@@ -66,10 +75,6 @@ class VenueListActivity : AppCompatActivity() {
 
                 }
         ).get(VenueListViewModel::class.java)
-
-
-        initUi()
-
 
         viewModel.observe(this, Observer { state ->
             if (state != null) {
@@ -93,10 +98,12 @@ class VenueListActivity : AppCompatActivity() {
         recycler.layoutManager = LinearLayoutManager(this)
         recycler.adapter = adapter
 
-
         searchBar = findViewById(R.id.search_bar)
         searchBar.setOnEditorActionListener { textView, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                window.decorView.clearFocus()
+                hideKeyboard()
+
                 viewModel.presenter.searchVenues(textView.text.toString())
 
             }
@@ -118,22 +125,27 @@ class VenueListActivity : AppCompatActivity() {
     }
 
     private fun showData(items: List<Venue>) {
+        recycler.visibility = View.VISIBLE
         loader.hide()
+        adapter.items.clear()
         adapter.addAll(items)
         adapter.notifyDataSetChanged()
     }
 
     private fun showEmpty() {
+        recycler.visibility = View.INVISIBLE
         loader.showNoDataError()
 
     }
 
     private fun showError() {
+        recycler.visibility = View.INVISIBLE
         loader.showNetworkError()
 
     }
 
     private fun showLoading() {
+        recycler.visibility = View.INVISIBLE
         loader.showLoading()
 
     }

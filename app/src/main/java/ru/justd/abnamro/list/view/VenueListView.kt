@@ -1,4 +1,4 @@
-package ru.justd.abnamro.list
+package ru.justd.abnamro.list.view
 
 import android.arch.lifecycle.MutableLiveData
 import ru.justd.abnamro.app.model.Venue

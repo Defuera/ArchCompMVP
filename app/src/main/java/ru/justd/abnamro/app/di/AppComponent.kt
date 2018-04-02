@@ -1,8 +1,8 @@
 package ru.justd.abnamro.app.di
 
 import dagger.Component
-import ru.justd.abnamro.list.VenueListPresenter
-import ru.justd.abnamro.list.VenueListView
+import ru.justd.abnamro.list.presenter.VenueListPresenter
+import ru.justd.abnamro.list.view.VenueListView
 import javax.inject.Singleton
 
 @Singleton
