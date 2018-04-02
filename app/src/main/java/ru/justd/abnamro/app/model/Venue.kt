@@ -1,10 +1,10 @@
-package ru.justd.abnamro.app
+package ru.justd.abnamro.app.model
 
 data class Venue (
-    var id: String,
-    var location: Location,
-    var name: String,
-    var contact: Contact
+        var id: String,
+        var location: Location,
+        var name: String,
+        var contact: Contact
 
 //    var venueChains: Array<String>,
 //    var stats: Stats,

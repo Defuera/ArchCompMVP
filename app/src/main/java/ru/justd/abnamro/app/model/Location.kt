@@ -1,4 +1,4 @@
-package ru.justd.abnamro.app
+package ru.justd.abnamro.app.model
 
 data class Location(
         val address: String,

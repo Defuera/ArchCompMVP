@@ -9,12 +9,15 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import android.view.ViewGroup.LayoutParams.*
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
+import butterknife.BindView
+import butterknife.ButterKnife
 import ru.justd.abnamro.R
-import ru.justd.abnamro.app.Venue
-import ru.justd.abnamro.list.model.VenueInteractor
+import ru.justd.abnamro.app.App
+import ru.justd.abnamro.app.model.Venue
 import ru.justd.abnamro.list.view.VenueListWidget
 import ru.justd.duperadapter.ArrayListDuperAdapter
 import ru.justd.lilwidgets.LilLoaderWidget
@@ -22,20 +25,30 @@ import ru.justd.lilwidgets.LilLoaderWidget
 
 class VenueListActivity : AppCompatActivity() {
 
-    //uiu
+    //region ui
+
+    @BindView(R.id.recycler)
     lateinit var recycler: RecyclerView
+
+    @BindView(R.id.search_bar)
     lateinit var searchBar: EditText
+
+    @BindView(R.id.loader)
     lateinit var loader: LilLoaderWidget
 
     private val adapter = ArrayListDuperAdapter()
 
-    //lifecycle
-    lateinit var viewModel: VenueListViewModel
+    //endregion
 
+
+    private lateinit var viewModel: VenueListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_venue_list)
+        ButterKnife.bind(this)
+
+        val graph = (application as App).graph
 
         //init architecture components view model
         viewModel = ViewModelProviders.of(
@@ -45,11 +58,10 @@ class VenueListActivity : AppCompatActivity() {
                     @Suppress("UNCHECKED_CAST")
                     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
 
-                        val view = VenueListView()
-                        val presenter = VenueListPresenter(view, VenueInteractor())
+                        val presenter = graph.getVenueListPresenter()
                         presenter.onStart()
 
-                        return VenueListViewModel(view, presenter) as T
+                        return VenueListViewModel(presenter.view, presenter) as T
                     }
 
                 }
@@ -67,10 +79,6 @@ class VenueListActivity : AppCompatActivity() {
     }
 
     private fun initUi() {
-        recycler = findViewById(R.id.recycler)
-        recycler.layoutManager = LinearLayoutManager(this)
-
-        recycler.adapter = adapter
         adapter
                 .addViewType<Venue, VenueListWidget>(Venue::class.java)
                 .addViewCreator { viewGroup ->
@@ -79,7 +87,12 @@ class VenueListActivity : AppCompatActivity() {
                     widget
                 }
                 .addViewBinder { widget, item -> widget.bind(item) }
+                .addClickListener { _, item -> viewModel.presenter.showVenueDetailed(item.id)}
                 .commit()
+
+        recycler.layoutManager = LinearLayoutManager(this)
+        recycler.adapter = adapter
+
 
         searchBar = findViewById(R.id.search_bar)
         searchBar.setOnEditorActionListener { textView, actionId, _ ->
@@ -89,9 +102,10 @@ class VenueListActivity : AppCompatActivity() {
             }
             true
         }
-
-        loader = findViewById(R.id.loader)
     }
+
+
+    //region view updates
 
     private fun onNewState(state: VenueListViewState) {
         when (state) {
@@ -110,7 +124,7 @@ class VenueListActivity : AppCompatActivity() {
     }
 
     private fun showEmpty() {
-//        loader.showError {  }
+        loader.showNoDataError()
 
     }
 
@@ -124,5 +138,6 @@ class VenueListActivity : AppCompatActivity() {
 
     }
 
+    //endregion
 
 }

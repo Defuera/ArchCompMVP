@@ -1,9 +1,10 @@
 package ru.justd.abnamro.list
 
 import android.arch.lifecycle.MutableLiveData
-import ru.justd.abnamro.app.Venue
+import ru.justd.abnamro.app.model.Venue
+import javax.inject.Inject
 
-class VenueListView {
+class VenueListView @Inject constructor(){
 
     val liveData = MutableLiveData<VenueListViewState>()
 

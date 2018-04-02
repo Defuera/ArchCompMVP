@@ -7,7 +7,7 @@ import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import ru.justd.abnamro.R
-import ru.justd.abnamro.app.Venue
+import ru.justd.abnamro.app.model.Venue
 
 class VenueListWidget(context: Context) : CardView(context) {
 

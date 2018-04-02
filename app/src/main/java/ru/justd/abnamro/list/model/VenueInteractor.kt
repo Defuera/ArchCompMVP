@@ -1,13 +1,14 @@
 package ru.justd.abnamro.list.model
 
 import android.util.Log
-import ru.justd.abnamro.app.Contact
-import ru.justd.abnamro.app.Location
-import ru.justd.abnamro.app.Venue
+import ru.justd.abnamro.app.model.Contact
+import ru.justd.abnamro.app.model.Location
+import ru.justd.abnamro.app.model.Venue
 import rx.Single
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class VenueInteractor {
+class VenueInteractor @Inject constructor() {
 
     fun searchVenue(name: String): Single<List<Venue>> {
         Log.i("DensTest", "test: $name")
