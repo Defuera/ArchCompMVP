@@ -24,6 +24,7 @@ android {
 def supportVersion = '26.1.0'
 def butterKnifeVersion = '8.6.0'
 def daggerVersion = '2.6'
+def retrofitVersion = '2.4.0'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -42,7 +43,9 @@ dependencies {
 
     // networking
     implementation "com.squareup.okhttp3:logging-interceptor:3.9.0"
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion"
 
     // UI stuff
     implementation 'com.github.Defuera:duper-adapter:60a36a2d4ec64a58d16f9b1bd84fff1ae304502f'
