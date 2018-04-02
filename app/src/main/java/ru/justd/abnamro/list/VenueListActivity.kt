@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.*
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import ru.justd.abnamro.R
@@ -71,7 +73,11 @@ class VenueListActivity : AppCompatActivity() {
         recycler.adapter = adapter
         adapter
                 .addViewType<Venue, VenueListWidget>(Venue::class.java)
-                .addViewCreator { viewGroup -> VenueListWidget(viewGroup.context) }
+                .addViewCreator { viewGroup ->
+                    val widget = VenueListWidget(viewGroup.context)
+                    widget.layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+                    widget
+                }
                 .addViewBinder { widget, item -> widget.bind(item) }
                 .commit()
 
