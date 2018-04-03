@@ -22,6 +22,7 @@ import ru.justd.abnamro.app.di.AppComponent
 import ru.justd.abnamro.app.model.Venue
 import ru.justd.abnamro.list.view.VenueListViewState
 import ru.justd.abnamro.list.view.VenueListWidget
+import ru.justd.abnamro.utils.VerticalSpaceItemDecoration
 import ru.justd.abnamro.utils.hideKeyboard
 import ru.justd.duperadapter.ArrayListDuperAdapter
 import ru.justd.lilwidgets.LilLoaderWidget
@@ -96,6 +97,7 @@ class VenueListActivity : AppCompatActivity() {
                 .commit()
 
         recycler.layoutManager = LinearLayoutManager(this)
+        recycler.addItemDecoration(VerticalSpaceItemDecoration(resources.getDimensionPixelOffset(R.dimen.padding_8)))
         recycler.adapter = adapter
 
         searchBar = findViewById(R.id.search_bar)

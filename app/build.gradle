@@ -11,7 +11,8 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "TOKEN", "\"KU1N1C4SI4ECVFUP0TWC5YQS3HMTLSOD1BZRXCGBBISKOVMK\""
     }
     buildTypes {
         release {
