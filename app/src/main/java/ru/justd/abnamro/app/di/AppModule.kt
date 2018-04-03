@@ -11,7 +11,7 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.justd.abnamro.BuildConfig
 import ru.justd.abnamro.app.Navigation
-import ru.justd.abnamro.app.model.VenueApi
+import ru.justd.abnamro.app.model.api.VenueApi
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -21,7 +21,6 @@ class AppModule(private val context: Context) {
     @Singleton
     @Provides
     fun providesNavigation() = Navigation(context)
-
 
     @Provides
     @Singleton

@@ -117,10 +117,9 @@ class VenueListActivity : AppCompatActivity() {
     private fun onNewState(state: VenueListViewState) {
         when (state) {
             is VenueListViewState.Loading -> showLoading()
-            is Error -> showError()
+            is VenueListViewState.Error -> showError()
             is VenueListViewState.Empty -> showEmpty()
             is VenueListViewState.Data -> showData(state.items)
-            else -> throw IllegalStateException("unknown state")
         }
     }
 
