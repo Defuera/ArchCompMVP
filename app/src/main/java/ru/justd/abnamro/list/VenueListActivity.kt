@@ -55,8 +55,8 @@ class VenueListActivity : AppCompatActivity() {
 
         val graph = (application as App).graph
 
-        //init architecture components view model
         initViewModel(graph)
+
         initUi()
     }
 

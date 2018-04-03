@@ -1,6 +1,7 @@
 package ru.justd.abnamro.app.di
 
 import dagger.Component
+import ru.justd.abnamro.list.model.VenueRepository
 import ru.justd.abnamro.list.presenter.VenueListPresenter
 import ru.justd.abnamro.list.view.VenueListView
 import javax.inject.Singleton
@@ -10,4 +11,6 @@ import javax.inject.Singleton
 interface AppComponent {
     fun getVenueListView(): VenueListView
     fun getVenueListPresenter(): VenueListPresenter
+
+    fun getVenueRepository(): VenueRepository
 }
